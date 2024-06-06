@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Stock Portfolio </title>
+        <script src="dist/the-datepicker.min.js"></script>
+        <script src="stock.js"></script>
+        <link rel="stylesheet" href="dist/the-datepicker.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+        crossorigin="anonymous">
+    </head>
+    
+    <body class="bg-light">
+        <!-- header -->
+        <div class="pt-5 text-center mt ">
+            <h1 class="mb-3 bg-info">USA/NY Stonk Portfolio</h1>
+            <button class="btn btn-primary" id="editForm" onclick="openEditModal()">Edit API Info</button>
+
+            <p class="mt-5">Instructions: <br>
+                1. Enter your API key and host. <br>
+                2. Enter your initial capital. <br>
+                3. Click "Add Stock" to add your purchased stocks. <br>
+                4. Press "Results" to view your portfolio values and P&L.
+            </p>
+        </div>
+
+        <!-- modal -->
+        <div id="simpleModal" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title">Enter API Info</h3>
+                  <button type="button" class="close" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <form onsubmit="return handleFormSubmit();">
+                    <div class="form-group">
+                      <label for="apiKey">API Key:</label>
+                      <input id="apiKey" type="text" class="form-control" placeholder="Key">
+                    </div>
+                    <div class="form-group">
+                      <label for="host">API Host:</label>
+                      <input id="host" type="text" class="form-control" placeholder="Host">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" onclick="openEditModal()">Edit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+                        
+          <div id="editModal" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title">Edit API Info</h3>
+                  <button type="button" class="close" onclick="closeEditModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <form onsubmit="return handleEditFormSubmit();">
+                    <div class="form-group">
+                      <label for="editApiKey">API Key:</label>
+                      <input id="editApiKey" type="text" class="form-control" placeholder="Key">
+                    </div>
+                    <div class="form-group">
+                      <label for="editHost">API Host:</label>
+                      <input id="editHost" type="text" class="form-control" placeholder="Host">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- portfolio information -->
+        <div class="row p-5 text-center">
+            <div class="col-4">
+                <label for="initial">Initial Amount (in US Dollars):</label>
+                <input class="form-control" type="number" min="0" oninput="validity.valid||(value='');" id="initial">
+            </div>
+            <div class="col-4">
+                Remaining Amount: <br>
+                <div id="remaining"></div>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-primary" id="add">Add Stock</button>
+            </div>
+        </div>
+
+        <!-- stock information -->
+        <div id="stock-info"></div>
+
+        <!-- portfolio result -->
+        <div class="p-5 d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary float-end" id="results-button">Result</button>
+        </div>
+
+        <div id="results-table" class="d-flex justify-content-center invisible">
+            <table class="table w-auto table-sm table-striped table-bordered table-responsive mx-5">
+                <thead>
+                  <tr>
+                    <th scope="col-1">Date</th>
+                    <th scope="col-3">Portfolio Value</th>
+                    <th scope="col-3">P & L</th>
+                  </tr>
+                </thead>
+                <tbody id="results-body"></tbody>
+            </table>
+        </div>
+
+
+        
+
+    </body>
+</html>
